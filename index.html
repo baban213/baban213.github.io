@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation</title>
+    <title>Fullscreen Video</title>
     <style>
         * {
             margin: 0;
@@ -32,15 +32,23 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const video = document.getElementById("video");
+            const pauseTimes = [2, 7, 12, 18];
+            let currentPauseIndex = 0;
+            
             video.play().catch(error => console.log("Autoplay blocked:", error));
+            
+            video.addEventListener("timeupdate", () => {
+                if (currentPauseIndex < pauseTimes.length && video.currentTime >= pauseTimes[currentPauseIndex]) {
+                    video.pause();
+                    currentPauseIndex++;
+                }
+            });
         });
         
         document.body.addEventListener("click", () => {
             const video = document.getElementById("video");
             if (video.paused) {
                 video.play();
-            } else {
-                video.pause();
             }
         });
     </script>
